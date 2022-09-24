@@ -1,4 +1,14 @@
+
 {
+  "name": "survey-management",
+  "version": "1.0.0",
+  "main": "server.js",
+  "author": "",
+  "license": "ISC",
+  "description": "",
+"scripts": {
+  "start": "nodemon server.js"
+},
   "devDependencies": {
     "nodemon": "^2.0.20"
   },

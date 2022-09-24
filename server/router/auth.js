@@ -4,6 +4,7 @@ const bcrypt=require("bcryptjs")
 const jwt=require("jsonwebtoken")
 const User=require("../model/userModel")
 
+//Register User
 router.post("/register",async(req,res) => {
 
     const { firstName, lastName, email, gender, password, district } = req.body.data;
@@ -28,7 +29,7 @@ router.post("/register",async(req,res) => {
         district,
         isAdmin
     });
-  console.log("User",user)
+
     try {
         const savedUser = await user.save();
         res.json({ message: "User Registered Successfully", id: savedUser._id });
@@ -38,6 +39,7 @@ router.post("/register",async(req,res) => {
 });
 
 
+//Login User
 router.post("/login", async (req, res) => {
 
     const { email, password } = req.body.data;
@@ -51,7 +53,8 @@ router.post("/login", async (req, res) => {
       return res.status(400).json({ message: "Password is not valid" });
   
     // JWT //
-    const token = jwt.sign({ _id: user._id }, process.env.TOKEN_SECRET);
+    const token = jwt.sign({ _id: user._id }, process.env.TOKEN_SECRET,{ expiresIn: '1800s' });
     res.json({ message: "User logged in", isAdmin: user.isAdmin, token: token });
   });
+
 module.exports = router;

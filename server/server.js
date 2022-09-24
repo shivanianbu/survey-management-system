@@ -2,6 +2,7 @@ const express=require("express");
 require('dotenv').config()
 const cors = require("cors");
 const authRoute=require("./router/auth")
+const userRoute=require("./router/user")
 const app=express();
 
 require('./config/db')
@@ -10,6 +11,7 @@ app.use(express.json());
 app.use(cors());
 
 app.use("/api/auth/", authRoute);
+app.use("/api/user/", userRoute);
 
 
 app.listen(process.env.PORT, 

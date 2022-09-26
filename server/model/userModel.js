@@ -34,6 +34,16 @@ const UserSchema = new mongoose.Schema({
         type: Boolean,
         required: true,
       },
+      wallet: {
+        type: Number,
+        default:0,
+        required: true,
+      },
+      surveys: {
+        type: Number,
+        default:0,
+        required: true,
+      },
       date: {
         type: Date,
         default: Date.now,

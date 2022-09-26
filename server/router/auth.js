@@ -5,9 +5,9 @@ const jwt=require("jsonwebtoken")
 const User=require("../model/userModel")
 
 //Register User
-router.post("/register",async(req,res) => {
+router.post("/register", async(req,res) => {
 
-    const { firstName, lastName, email, gender, password, district } = req.body.data;
+    const { firstName, lastName, email, gender,dob, password, district } = req.body.data;
     const emailExist = await User.findOne({ email });
     
     if (emailExist) {
@@ -24,7 +24,7 @@ router.post("/register",async(req,res) => {
         lastName,
         email,
         gender,
-        dob:Date.now(),
+        dob,
         password: hashedPassword,
         district,
         isAdmin
@@ -32,18 +32,18 @@ router.post("/register",async(req,res) => {
 
     try {
         const savedUser = await user.save();
-        res.json({ message: "User Registered Successfully", id: savedUser._id });
+        const token = jwt.sign({ _id: savedUser._id }, process.env.TOKEN_SECRET,{ expiresIn: '1800s' });
+        res.json({ message: "User Registered Successfully", id: savedUser._id, token: token });
     } catch (err) {
-        res.status(400).json({ message: "Something went wrong " });
+        res.status(400).json({ message: `Something went wrong ${err}` });
     }
 });
 
 
 //Login User
-router.post("/login", async (req, res) => {
+router.post("/login", async(req, res) => {
 
     const { email, password } = req.body.data;
-    
     const user = await User.findOne({ email: email });
     if (!user) return res.status(400).json({ message: "Email doesn't exist" });
   
@@ -54,7 +54,7 @@ router.post("/login", async (req, res) => {
   
     // JWT //
     const token = jwt.sign({ _id: user._id }, process.env.TOKEN_SECRET,{ expiresIn: '1800s' });
-    res.json({ message: "User logged in", isAdmin: user.isAdmin, token: token });
+    res.json({ message: "User logged in", id:user._id, isAdmin: user.isAdmin, token: token });
   });
 
 module.exports = router;

@@ -1,4 +1,3 @@
-
 {
   "name": "survey-management",
   "version": "1.0.0",
@@ -6,10 +5,13 @@
   "author": "",
   "license": "ISC",
   "description": "",
-"scripts": {
-  "start": "nodemon server.js"
-},
+  "scripts": {
+    "start": "nodemon server.js",
+    "client": "npm start --prefix ../client/",
+    "dev": "concurrently \"npm start\"  \"npm run client\""
+  },
   "devDependencies": {
+    "concurrently": "^7.4.0",
     "nodemon": "^2.0.20"
   },
   "dependencies": {
@@ -17,6 +19,7 @@
     "cors": "^2.8.5",
     "dotenv": "^16.0.2",
     "express": "^4.18.1",
+    "express-rate-limit": "^6.6.0",
     "jsonwebtoken": "^8.5.1",
     "mongoose": "^6.6.1"
   }

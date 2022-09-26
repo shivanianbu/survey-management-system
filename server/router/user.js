@@ -1,9 +1,18 @@
 const User = require("../model/userModel");
-const verify = require("./verifyToken");
+const {verify} = require("./verifyToken");
 const router = require("./auth");
 
-//Fetch all users
 
+//Get user
+router.get("/", verify, async (req, res) => {
+  console.log("getUser",req.body," ",req.user)
+  const userDetails = await User.findById({ _id: req.user._id }).select(
+    "-password"
+  );
+  res.json(userDetails);
+});
+
+//Fetch all users
 router.get("/fetch", verify, async (req, res) => {
   try {
     const userDetails = await User.find({

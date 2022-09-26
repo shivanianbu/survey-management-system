@@ -41,10 +41,6 @@ const surveySchema = new mongoose.Schema(
             },
           },
         ],
-        required: {
-          type: Boolean,
-          default: false,
-        },
       },
     ],
   },

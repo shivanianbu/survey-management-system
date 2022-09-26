@@ -12,7 +12,7 @@ require('./config/db')
 
 app.use(express.json());
 app.use(cors());
-app.use(rateLimiterUsingThirdParty)
+app.use(rateLimiterUsingThirdParty)           //rate Limiter
 
 
 app.use("/api/auth", authRoute);

@@ -17,7 +17,7 @@ router.post("/admin/add", verify, async (req, res) => {
                 questions,
             });
             const newSurvey = await survey.save();
-            res.status(200).json({ message: "Survey Added" , id : newSurvey._id});
+            res.status(200).json({ message: "Survey Added", id: newSurvey._id });
         } else {
             res.status(400).json({ message: "User not Authorised" })
         }
@@ -26,7 +26,8 @@ router.post("/admin/add", verify, async (req, res) => {
     }
 });
 
-router.get("/fetch",verify, async (req, res) => {
+//Get survey all by admin or the surveys by district for user
+router.get("/fetch", verify, async (req, res) => {
     try {
         let surveyDetails = [];
         const user = await User.findOne({ _id: req.user._id });
@@ -50,15 +51,15 @@ router.get("/fetch",verify, async (req, res) => {
     }
 });
 
-
-router.get("/:surveyId",verify, async (req, res) => {
+//Get Survey by ID
+router.get("/:surveyId", verify, async (req, res) => {
     try {
-      const surveyDetails = await Surveys.findById(req.params.surveyId);
-      res.json(surveyDetails);
+        const surveyDetails = await Surveys.findById(req.params.surveyId);
+        res.json(surveyDetails);
     } catch (err) {
-      res.json(err);
+        res.json(err);
     }
-  });
+});
 
 
 module.exports = router;
